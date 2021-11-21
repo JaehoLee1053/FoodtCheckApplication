@@ -2,10 +2,10 @@ package com.goodlucklee.foodtcheckapplication;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -15,8 +15,9 @@ import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
-import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
+
+import com.goodlucklee.foodtcheckapplication.map.NaverMapUtil;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -30,13 +31,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private FusedLocationSource mLocationSource;
     private NaverMap mNaverMap;
+    private NaverMapUtil naverMapUtil;
 
     LatLng emartLatLng = new LatLng(37.3983, 126.9353);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_map);
 
         // 지도 객체 생성
         FragmentManager fm = getSupportFragmentManager();
@@ -58,9 +60,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Log.d(TAG, "onMapReady");
 
         // 지도상에 마커 표시
-        Marker marker = new Marker();
-        marker.setPosition(emartLatLng);
-        marker.setMap(naverMap);
+//        Marker marker = new Marker();
+//        marker.setPosition(emartLatLng);
+//        marker.setMap(naverMap);
+        naverMapUtil = new NaverMapUtil(naverMap);
+        naverMapUtil.placeMarker(emartLatLng);
 
         // NaverMap 객체 받아서 NaverMap 객체에 위치 소스 지정
         mNaverMap = naverMap;

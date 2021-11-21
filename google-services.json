@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "991448756524",
+    "project_id": "foodtcheckapplicaataion",
+    "storage_bucket": "foodtcheckapplicaataion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991448756524:android:b5a5e665159c6df173fc89",
+        "android_client_info": {
+          "package_name": "com.goodlucklee.foodtcheckapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "991448756524-oh900k1pc1ccumlr47i9t7u17jecin64.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaWC4Tpb8dj57wMm69V3pmDf21l30AwH4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "991448756524-oh900k1pc1ccumlr47i9t7u17jecin64.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
