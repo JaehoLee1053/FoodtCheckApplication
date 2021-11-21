@@ -1,15 +1,18 @@
 package com.goodlucklee.foodtcheckapplication;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AppCompatActivity;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.goodlucklee.foodtcheckapplication.map.NaverMapUtil;
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
@@ -17,14 +20,12 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.util.FusedLocationSource;
 
-import com.goodlucklee.foodtcheckapplication.map.NaverMapUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class RestaurantListActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final String TAG = "MapActivity";
+    private static final String TAG = "RestaurantListActivity";
 
     private static final int PERMISSION_REQUEST_CODE = 100;
     private static final String[] PERMISSIONS = {
@@ -36,24 +37,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private NaverMap mNaverMap;
     private NaverMapUtil naverMapUtil;
 
+    List<LatLng> latLngList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_restaurant_list);
 
         // 지도 객체 생성
         FragmentManager fm = getSupportFragmentManager();
-        MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map_fragment);
+        MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map_fragment_in_list);
         if (mapFragment == null) {
             mapFragment = MapFragment.newInstance();
-            fm.beginTransaction().add(R.id.map_fragment, mapFragment).commit();
+            fm.beginTransaction().add(R.id.map_fragment_in_list, mapFragment).commit();
         }
+
 
         // getMapAsync 호출하여 비동기로 onMapReady 콜백 매서드 호출
         // onMapReady에서 NaverMap 객체 수신
         mapFragment.getMapAsync(this);
-
         mLocationSource = new FusedLocationSource(this, PERMISSION_REQUEST_CODE);
     }
 
@@ -63,19 +65,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         // 지도상에 마커 표시
         naverMapUtil = new NaverMapUtil(naverMap);
+        LatLng emartLatLng = new LatLng(37.398309894727454, 126.93521185996363);
         LatLng lotteliaLatLng = new LatLng(37.39912204588599, 126.93867740569507);
-        naverMapUtil.placeMarker(lotteliaLatLng);
+
+        latLngList.add(emartLatLng);
+        latLngList.add(lotteliaLatLng);
+        naverMapUtil.placeMarker(latLngList);
 
         // NaverMap 객체 받아서 NaverMap 객체에 위치 소스 지정
         mNaverMap = naverMap;
         mNaverMap.setLocationSource(mLocationSource);
 
-        // UI 컨트롤러
+        // UI 컨트롤러 제거
         UiSettings uiSettings = mNaverMap.getUiSettings();
-        uiSettings.setCompassEnabled(true);
-        uiSettings.setScaleBarEnabled(true);
-        uiSettings.setZoomControlEnabled(true);
-        uiSettings.setLocationButtonEnabled(true);
+        uiSettings.setCompassEnabled(false);
+        uiSettings.setScaleBarEnabled(false);
+        uiSettings.setZoomControlEnabled(false);
+        uiSettings.setLocationButtonEnabled(false);
+
+        CameraPosition cameraPosition= new CameraPosition(emartLatLng, 13);
+        mNaverMap.setCameraPosition(cameraPosition);
 
         ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_REQUEST_CODE);
     }
