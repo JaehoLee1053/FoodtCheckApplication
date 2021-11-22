@@ -6,9 +6,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.goodlucklee.foodtcheckapplication.map.NaverMapUtil;
 import com.naver.maps.geometry.LatLng;
@@ -83,7 +85,10 @@ public class RestaurantListActivity extends AppCompatActivity implements OnMapRe
         uiSettings.setZoomControlEnabled(false);
         uiSettings.setLocationButtonEnabled(false);
 
-        CameraPosition cameraPosition= new CameraPosition(emartLatLng, 13);
+        naverMap.setLocationTrackingMode(LocationTrackingMode.NoFollow);
+//        naverMap.setExtent();
+
+        CameraPosition cameraPosition = new CameraPosition(emartLatLng, 13);
         mNaverMap.setCameraPosition(cameraPosition);
 
         ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_REQUEST_CODE);
@@ -97,8 +102,13 @@ public class RestaurantListActivity extends AppCompatActivity implements OnMapRe
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mNaverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+                mNaverMap.setLocationTrackingMode(LocationTrackingMode.NoFollow);
             }
         }
+    }
+
+    public void switchFullMapActivity(View view) {
+        Intent intent = new Intent(this, AllMapActivity.class);
+        startActivity(intent);
     }
 }

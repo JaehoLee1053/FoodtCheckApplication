@@ -22,7 +22,7 @@ import com.goodlucklee.foodtcheckapplication.map.NaverMapUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class AllMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "MapActivity";
 
@@ -36,6 +36,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private NaverMap mNaverMap;
     private NaverMapUtil naverMapUtil;
 
+    List<LatLng> latLngList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +64,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         // 지도상에 마커 표시
         naverMapUtil = new NaverMapUtil(naverMap);
+        LatLng emartLatLng = new LatLng(37.398309894727454, 126.93521185996363);
         LatLng lotteliaLatLng = new LatLng(37.39912204588599, 126.93867740569507);
-        naverMapUtil.placeMarker(lotteliaLatLng);
+
+        latLngList.add(emartLatLng);
+        latLngList.add(lotteliaLatLng);
+        naverMapUtil.placeMarker(latLngList);
 
         // NaverMap 객체 받아서 NaverMap 객체에 위치 소스 지정
         mNaverMap = naverMap;
