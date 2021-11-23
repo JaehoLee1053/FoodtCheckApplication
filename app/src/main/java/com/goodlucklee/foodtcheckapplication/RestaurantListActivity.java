@@ -85,7 +85,7 @@ public class RestaurantListActivity extends AppCompatActivity implements OnMapRe
         uiSettings.setZoomControlEnabled(false);
         uiSettings.setLocationButtonEnabled(false);
 
-        naverMap.setLocationTrackingMode(LocationTrackingMode.NoFollow);
+        naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
 //        naverMap.setExtent();
 
         CameraPosition cameraPosition = new CameraPosition(emartLatLng, 13);
@@ -102,7 +102,7 @@ public class RestaurantListActivity extends AppCompatActivity implements OnMapRe
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mNaverMap.setLocationTrackingMode(LocationTrackingMode.NoFollow);
+                mNaverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
             }
         }
     }
